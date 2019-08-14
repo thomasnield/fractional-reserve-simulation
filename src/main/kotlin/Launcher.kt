@@ -2,31 +2,48 @@
 // look up "modern money mechanics"
 // Biased video: https://www.youtube.com/watch?v=P-5xDzTvW6E
 
+
 fun main() {
-	println("Hello")
+
+
 }
 
+// Parties
+sealed class Party
 
-sealed class Entity
+object FederalReserve: Party() {
+	val sentLoans = mutableListOf<Loan>()
 
-class Consumer: Entity() {
+	fun loanToFed(amount: Double) {
+		val loan = Loan(amount, 0.0)
+	}
+}
+
+object FederalGovernment: Party() {
 	val receivedLoans = mutableListOf<Loan>()
 }
 
-class Bank: Entity() {
-	val sentLoans = mutableListOf<Loan>()
-}
-
-class FederalReserve: Entity() {
-	val sentLoans = mutableListOf<Loan>()
-}
-
-class FederalGovernment: Entity() {
+class Consumer: Party() {
 	val receivedLoans = mutableListOf<Loan>()
 }
+
+class Bank: Party() {
+	val sentLoans = mutableListOf<Loan>()
+
+
+	fun createAccount(consumer: Consumer) {
+
+	}
+}
+
+// Accounts
 
 sealed class Account {
 	abstract val amount: Double
+}
+
+class CheckingAccount: Account() {
+	override var amount = 0.0
 }
 
 class Loan(val interestRate: Double, val principal: Double): Account() {
